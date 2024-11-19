@@ -45,17 +45,24 @@ npm run cypress:open
 npm run cypress:run
 ```
 
-## Tutorial for teammates
+## Tutorial: Basics
+Select your own branch:
+```bash
+git checkout <branch_name>
+```
 Pull to get the latest changes from the development branch:
 ```bash
-git pull dev
+# Be up to date 
+git fetch origin
+# Merge the updated dev branch into your own
+git merge dev
 ```
 Install all dependencies:
 ```bash
 npm install
 ```
-
-Now, I have created two test inside their respective folders. Studying these simple examples and the following testing tutorial should be a good starting point to create your own tests :)  
+### Tutorial: Testing
+Now, I have created two exemplary tests inside their respective folders. Studying these along with the following testing tutorial should be a good starting point to create your own tests :)  
 
 Run the backend tests:
 ```bash
