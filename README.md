@@ -52,8 +52,8 @@ git checkout <branch_name>
 ```
 Pull to get the latest changes from the development branch:
 ```bash
-# Be up to date 
-git fetch origin
+# Pull latest changes
+git pull
 # Merge the updated dev branch into your own
 git merge dev
 ```
