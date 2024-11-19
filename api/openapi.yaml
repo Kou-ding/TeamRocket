@@ -3,9 +3,6 @@ info:
   title: TravelSet
   description: The API of a trip management app called TravelSet
   version: 2.0.0
-servers:
-- url: https://travelset.com
-  description: SwaggerHub API Auto Mocking
 paths:
   /user:
     post:
