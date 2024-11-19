@@ -29,4 +29,50 @@ open http://localhost:8080/docs
 
 This project leverages the mega-awesome [swagger-tools](https://github.com/apigee-127/swagger-tools) middleware which does most all the work.
 
+## Backend testing
+Installing dependencies:
+```bash
+npm install --save-dev ava@5.3.1 c8@8.0.1 got@11.8.3
+```
+## Frontend testing
+Installing dependencies:
+```bash
+npm install --save-dev cypress
+```
+Running cypress:
+```bash
+npm run cypress:open
+npm run cypress:run
+```
 
+## Tutorial for teammates
+Pull to get the latest changes from the development branch:
+```bash
+git pull dev
+```
+Install all dependencies:
+```bash
+npm install
+```
+
+Now, I have created two test inside their respective folders. Studying these simple examples and the following testing tutorial should be a good starting point to create your own tests :)  
+
+Run the backend tests:
+```bash
+# 1.Create your own test file inside the:
+cd tests 
+# folder. (don't forget to name it as follows: <branch_name>backend.test.js)
+# 2.Write your tests
+# 3.Run the testing script
+npm run ava
+```
+Run the frontend tests:
+```bash
+# 1.Create your own test file inside the:
+cd cypress/e2e/
+# cypress folder. (don't forget to name it as follows: <branch_name>frontend.cy.js)
+# 2.Write your tests
+# 3.Run the testing script
+npm run cypress:open
+# Navigate to the test you wrote from inside the cypress gui
+```
