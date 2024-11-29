@@ -3,6 +3,7 @@ const test = require("ava");
 const got = require("got");
 const app = require("../index.js");
 
+// Start the server before running tests
 test.before(async (t) => {
 	t.context.server = http.createServer(app);
 	const server = t.context.server.listen();
