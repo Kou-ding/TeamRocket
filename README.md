@@ -79,7 +79,10 @@ Run the frontend tests:
 cd cypress/e2e/
 # cypress folder. (don't forget to name it as follows: <branch_name>frontend.cy.js)
 # 2.Write your tests
-# 3.Run the testing script
+# 3.Run the server on a separate terminal using
+npm start
+# 4.Run the testing script
 npm run cypress:open
 # Navigate to the test you wrote from inside the cypress gui
+# browser -> e2e -> test.cy.js
 ```
