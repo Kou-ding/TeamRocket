@@ -12,6 +12,7 @@ test.before(async (t) => {
 	});
 });
 
+// Close the server after all tests are done
 test.after.always((t) => {
 	t.context.server.close();
 });
