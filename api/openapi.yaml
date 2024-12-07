@@ -727,9 +727,11 @@ components:
           type: integer
           description: Unique identifier for the day.
           format: int64
+          minimum: 1
         dayNumber:
           type: integer
           description: The day number in the trip itinerary.
+          format: int64
         activityList:
           type: array
           description: List of activities for the day.
