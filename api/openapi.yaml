@@ -634,7 +634,6 @@ components:
         dates:
           type: string
           description: Date range for the trip.
-          format: date
         budget:
           type: integer
           description: Budget for the trip.
@@ -688,7 +687,6 @@ components:
         date:
           type: string
           description: Date of the transportation.
-          format: date
         time:
           type: integer
           description: "Time of the transportation in 24-hour format (e.g., 1400 for\
