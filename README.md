@@ -57,8 +57,11 @@ git checkout <branch_name>
 # Merge the updated dev branch into your own
 git merge dev
 ```
-Create pull request:
 
+Create pull request:
+```bash
+
+```
 
 Install all dependencies:
 ```bash
