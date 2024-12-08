@@ -53,18 +53,25 @@ Git and GitHub
 Pulling before coding 
 Pull requests 
 
+## Git and gitHub 
+>stage    
+>commit    
+>sync    
+
+
+
 ## Pulling before coding 
 
 
 ### VS Code 
->Checkout into dev branch 
-Select your branch from the bottom left and from the drop down menu in the top of the screen select 
-select the dev branch 
->Pull remote dev into local dev 
-select the searvh bar at the top and type: >Git pull
->Checkout into your branch 
->Merge the dev into your branch 
-type: > Git merge from [dev]
+>Checkout into dev branch   
+Select your branch from the bottom left and from the drop down menu in the top of the screen select    
+select the dev branch    
+>Pull remote dev into local dev    
+select the searvh bar at the top and type: >Git pull   
+>Checkout into your branch    
+>Merge the dev into your branch    
+type: > Git merge from [dev]   
 
 
 ### Command line 
