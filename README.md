@@ -57,11 +57,30 @@ git checkout <branch_name>
 # Merge the updated dev branch into your own
 git merge dev
 ```
+### Pull request tutorial 
+When we make changes to branch, we want to push these changes into the dev branch.
+It is a good practise to create a pull request instead of pushing any changes directly. 
+This allows us to doublecheck and make sure that these changes do not create conflicts or unwanted results 
+Also, this way a senior member can doublecheck and accept the pull request
+
+GitHub: 
+>Push all changes into tour own remote branch 
+>Go to github project
+>Go into Pull requests 
+>New pull request
+>dev <- [mybranch]
+>Create pull request 
 
 Create pull request:
 ```bash
 
+
 ```
+
+
+
+
+#
 
 Install all dependencies:
 ```bash
