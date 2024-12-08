@@ -54,9 +54,9 @@ Pulling before coding
 Pull requests 
 
 ## Git and gitHub 
->stage    
->commit    
->sync    
+>>stage    
+>>commit    
+>>sync    
 
 
 
@@ -64,13 +64,13 @@ Pull requests
 
 
 ### VS Code 
->Checkout into dev branch   
+>>Checkout into dev branch   
 Select your branch from the bottom left and from the drop down menu in the top of the screen select    
 select the dev branch    
->Pull remote dev into local dev    
+>>Pull remote dev into local dev    
 select the searvh bar at the top and type: >Git pull   
->Checkout into your branch    
->Merge the dev into your branch    
+>>Checkout into your branch    
+>>Merge the dev into your branch    
 type: > Git merge from [dev]   
 
 
@@ -95,12 +95,12 @@ This allows us to doublecheck and make sure that these changes do not create con
 Also, this way a senior member can doublecheck and accept the pull request
 
 ### GitHub: 
->Push all changes into tour own remote branch 
->Go to github project
->Go into Pull requests 
->New pull request
->dev <- [mybranch]
->Create pull request 
+>>Push all changes into tour own remote branch 
+>>Go to github project
+>>Go into Pull requests 
+>>New pull request
+>>dev <- [mybranch]
+>>Create pull request 
 
 ### Comand line:
 Create pull request:
