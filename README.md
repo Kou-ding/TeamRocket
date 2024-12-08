@@ -46,17 +46,20 @@ npm run cypress:run
 ```
 
 ## Tutorial: Basics
-Select your own branch:
+Pull changes into your own branch:
 ```bash
-git checkout <branch_name>
-```
-Pull to get the latest changes from the development branch:
-```bash
-# Pull latest changes
+# Select the dev branch
+git checkout dev
+# Pull latest changes made on dev branch
 git pull
+# Select your own branch
+git checkout <branch_name>
 # Merge the updated dev branch into your own
 git merge dev
 ```
+Create pull request:
+
+
 Install all dependencies:
 ```bash
 npm install
