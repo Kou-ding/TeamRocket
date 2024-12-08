@@ -67,7 +67,7 @@ test("GET /user/", async (t) => {
 
 	// Check specific properties of the trip
 	t.is(trip.name, "Beach Vacation", "Expected trip name to be 'Beach Vacation'");
-	t.is(trip.dates, "2024-12-20 to 2024-12-27", "Expected trip dates to be '2024-12-20 to 2024-12-27'");
+	t.deepEqual(trip.dates, ["2024-12-20", "2024-12-27"], "Expected trip dates to be ['2024-12-20', '2024-12-27']");
 	t.is(trip.budget, 5000, "Expected trip budget to be 5000");
 });
 
@@ -78,7 +78,7 @@ test("POST /user/1/trip should return the trip", async (t) => {
 			"id": 101,
 			"name": "Beach Vacation",
 			"destination": "Maldives",
-			"dates": "2024-12-20 to 2024-12-27",
+			"dates": ["2024-12-20", "2024-12-27"],
 			"budget": 5000,
 			"isPast": false,
 			"accommodation": {
@@ -115,7 +115,6 @@ test("POST /user/1/trip should return the trip", async (t) => {
 
 	// Test some attributes of the response body
 	t.is(body.name, "Beach Vacation", "Expected trip name to be 'Beach Vacation'");
-	t.is(body.dates, "2024-12-20 to 2024-12-27", "Expected trip dates to be '2024-12-20 to 2024-12-27'");
+	t.deepEqual(body.dates, ["2024-12-20", "2024-12-27"], "Expected trip dates to be ['2024-12-20', '2024-12-27']");
 	t.is(body.budget, 5000, "Expected trip budget to be 5000");
 });
-
