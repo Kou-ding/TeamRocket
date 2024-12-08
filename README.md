@@ -45,7 +45,29 @@ npm run cypress:open
 npm run cypress:run
 ```
 
-## Tutorial: Basics
+
+## Git and GitHub
+contents: 
+Git basics 
+Git and GitHub
+Pulling before coding 
+Pull requests 
+
+## Pulling before coding 
+
+
+### VS Code 
+>Checkout into dev branch 
+Select your branch from the bottom left and from the drop down menu in the top of the screen select 
+select the dev branch 
+>Pull remote dev into local dev 
+select the searvh bar at the top and type: >Git pull
+>Checkout into your branch 
+>Merge the dev into your branch 
+type: > Git merge from [dev]
+
+
+### Command line 
 Pull changes into your own branch:
 ```bash
 # Select the dev branch
@@ -57,13 +79,15 @@ git checkout <branch_name>
 # Merge the updated dev branch into your own
 git merge dev
 ```
-### Pull request tutorial 
+
+
+## Pull request  
 When we make changes to branch, we want to push these changes into the dev branch.
 It is a good practise to create a pull request instead of pushing any changes directly. 
 This allows us to doublecheck and make sure that these changes do not create conflicts or unwanted results 
 Also, this way a senior member can doublecheck and accept the pull request
 
-GitHub: 
+### GitHub: 
 >Push all changes into tour own remote branch 
 >Go to github project
 >Go into Pull requests 
@@ -71,6 +95,7 @@ GitHub:
 >dev <- [mybranch]
 >Create pull request 
 
+### Comand line:
 Create pull request:
 ```bash
 
