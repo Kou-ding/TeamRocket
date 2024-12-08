@@ -632,8 +632,9 @@ components:
           type: string
           description: Destination of the trip.
         dates:
-          type: string
+          type: array
           description: Date range for the trip.
+          format: date
         budget:
           type: integer
           description: Budget for the trip.
@@ -656,7 +657,7 @@ components:
         id: 101
         name: Beach Vacation
         destination: Maldives
-        dates: 2024-12-20 to 2024-12-27
+        dates: ["2024-12-20","2024-12-27"]
         budget: 5000
         isPast: false
         accommodation:
@@ -687,6 +688,7 @@ components:
         date:
           type: string
           description: Date of the transportation.
+          format: date
         time:
           type: integer
           description: "Time of the transportation in 24-hour format (e.g., 1400 for\
