@@ -20,51 +20,83 @@ test.after.always((t) => {
     t.context.server.close();
 });
 
-// Test: GET /user/:userId/trip/:tripId
-test("GET /user/:userId/trip/:tripId should return a specific trip", async (t) => {
-    const userId = "123";
-    const tripId = "456";
-
-    const response = await t.context.got(`user/${userId}/trip/${tripId}`);
-    t.is(response.statusCode, 200); // Assuming success status is 200
-    t.truthy(response.body.tripId); // Ensure tripId exists in the response
-    t.is(response.body.tripId, tripId);
-});
-
-// Test: POST /user/:userId/trip/:tripId/accommodation
-test("POST /user/:userId/trip/:tripId/accommodation should add an accommodation", async (t) => {
-    const userId = "123";
-    const tripId = "456";
-    const accommodation = {
-        name: "Hotel XYZ",
-        address: "123 Main St",
-        price: 100
-    };
-
-    const response = await t.context.got.post(`user/${userId}/trip/${tripId}/accommodation`, {
-        json: accommodation
+test("GET /user/:id/trip/:id should return the trip details", async (t) => {
+    const id = 101;
+  
+    const response = await t.context.got(`user/${id}/trip/${id}`);
+  
+    t.is(response.statusCode, 200, "Expected a 200 status code");
+  
+    const body = typeof response.body === "string" ? JSON.parse(response.body) : response.body;
+  
+    // Assert trip details
+    t.is(body.id, 101, "Expected trip ID to be 101");
+    t.is(body.name, "Beach Vacation", "Expected trip name to be 'Beach Vacation'");
+  
+    // Assert transportation
+    t.deepEqual(body.transportation, {
+      name: "Flight",
+      date: "2024-12-20", 
+      time: 930,
     });
-
-    t.is(response.statusCode, 201); // Assuming success status is 201
-    t.is(response.body.message, "Accommodation added successfully");
-});
-
-// Test: POST /user/:userId/trip/:tripId/transportation
-test("POST /user/:userId/trip/:tripId/transportation should add a transportation method", async (t) => {
-    const userId = "123";
-    const tripId = "456";
-    const transportation = {
-        type: "Flight",
-        company: "Air XYZ",
-        price: 200
+  });
+  
+test("POST /user/:id/trip/:id/accommodation should add accommodation", async (t) => {
+    const id = 101;
+    const newAccommodation = {
+      name: "Paradise Inn",
+      address: "123 Beach Road, Maldives",
+      price: 1500,
     };
-
-    const response = await t.context.got.post(`user/${userId}/trip/${tripId}/transportation`, {
-        json: transportation
+  
+    const response = await t.context.got.post(`user/${id}/trip/${id}/accommodation`, {
+      json: newAccommodation,
+      responseType: "json", // Automatically parse JSON response
     });
+  
+    // Debugging: Log the response if the test fails
+    if (response.statusCode !== 200) {
+      console.log("Response Status:", response.statusCode);
+      console.log("Response Body:", response.body);
+    }
+  
+    t.is(response.statusCode, 200, "Expected a 200 status code");
+  
+    const body = response.body;
+  
+    // Assert accommodation details
+    t.is(body.accommodation.name, "Paradise Inn", "Expected accommodation name to match");
+    t.is(body.accommodation.address, "123 Beach Road, Maldives", "Expected accommodation address to match");
+    t.is(body.accommodation.price, 1500, "Expected accommodation price to match");
+  });
 
-    t.is(response.statusCode, 201); // Assuming success status is 201
-    t.is(response.body.message, "Transportation added successfully");
-});
-
-
+test("POST /user/:id/trip/:id/transportation should add transportation", async (t) => {
+    const id = 101; // Example ID for user and trip
+    const newTransportation = {
+      name: "Flight",
+      date: "2024-12-20",
+      time: 930,
+    };
+  
+    const response = await t.context.got.post(`user/${id}/trip/${id}/transportation`, {
+      json: newTransportation,
+      responseType: "json", // Automatically parse JSON response
+    });
+  
+    // Debugging: Log the response if the test fails
+    if (response.statusCode !== 200) {
+      console.log("Response Status:", response.statusCode);
+      console.log("Response Body:", response.body);
+    }
+  
+    // Assert the response status
+    t.is(response.statusCode, 200, "Expected a 200 status code");
+  
+    const body = response.body;
+  
+    // Assert the transportation details
+    t.is(body.transportation.name, "Flight", "Expected transportation name to match");
+    t.is(body.transportation.date, "2024-12-20", "Expected transportation date to match");
+    t.is(body.transportation.time, 930, "Expected transportation time to match");
+  });
+  
