@@ -67,5 +67,3 @@ describe('FT-02: Explore Frontend Testing', () => {
         .should('contain.text', '200');
     });
   });
-  
-  
