@@ -35,3 +35,19 @@ describe('post /user/1/trip', () => {
 		cy.get('button[class="btn execute opblock-control__btn"]').click()
 	})
 })
+
+describe('delete /user/{userId}/trip/{tripId}/day/{dayId}/activity/{activityId}', () => {
+	beforeEach(() => {
+		cy.visit('http://localhost:8080/docs')
+	})
+
+	it('Generate delete /user/{userId}/trip/{tripId}/day/{dayId}/activity/{activityId}', () => {
+		cy.get('a[href="#/default/deleteActivity"]').click()
+		cy.get('button[class="btn try-out__btn"]').click();
+		cy.get('input[placeholder="userId - The user\'s Id"]').type('1') 
+		cy.get('input[placeholder="tripId - The trip\'s Id"]').type('1') 
+		cy.get('input[placeholder="dayId - The day\'s Id"]').type('1') 
+		cy.get('input[placeholder="activityId - The activity\'s Id"]').type('1') 
+		cy.get('button[class="btn execute opblock-control__btn"]').click()
+	})
+})
