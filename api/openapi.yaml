@@ -3,9 +3,6 @@ info:
   title: TravelSet
   description: The API of a trip management app called TravelSet
   version: 2.0.0
-servers:
-- url: https://travelset.com
-  description: SwaggerHub API Auto Mocking
 paths:
   /user:
     post:
@@ -635,7 +632,7 @@ components:
           type: string
           description: Destination of the trip.
         dates:
-          type: string
+          type: array
           description: Date range for the trip.
           format: date
         budget:
@@ -660,7 +657,7 @@ components:
         id: 101
         name: Beach Vacation
         destination: Maldives
-        dates: 2024-12-20 to 2024-12-27
+        dates: ["2024-12-20","2024-12-27"]
         budget: 5000
         isPast: false
         accommodation:
@@ -730,9 +727,11 @@ components:
           type: integer
           description: Unique identifier for the day.
           format: int64
+          minimum: 1
         dayNumber:
           type: integer
           description: The day number in the trip itinerary.
+          format: int64
         activityList:
           type: array
           description: List of activities for the day.

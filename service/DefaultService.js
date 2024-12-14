@@ -17,7 +17,7 @@ exports.addAccommodation = function(body,userId,tripId) {
   "id" : 101,
   "name" : "Beach Vacation",
   "destination" : "Maldives",
-  "dates" : "2024-12-20 to 2024-12-27",
+  "dates" : ["2024-12-20", "2024-12-27"],
   "budget" : 5000,
   "isPast" : false,
   "accommodation" : {
@@ -99,7 +99,7 @@ exports.addDay = function(userId,tripId) {
   "id" : 101,
   "name" : "Beach Vacation",
   "destination" : "Maldives",
-  "dates" : "2024-12-20 to 2024-12-27",
+  "dates" : ["2024-12-20", "2024-12-27"],
   "budget" : 5000,
   "isPast" : false,
   "accommodation" : {
@@ -147,7 +147,7 @@ exports.addTransportation = function(body,userId,tripId) {
   "id" : 101,
   "name" : "Beach Vacation",
   "destination" : "Maldives",
-  "dates" : "2024-12-20 to 2024-12-27",
+  "dates" : ["2024-12-20", "2024-12-27"],
   "budget" : 5000,
   "isPast" : false,
   "accommodation" : {
@@ -194,7 +194,7 @@ exports.createTrip = function(body,userId) {
   "id" : 101,
   "name" : "Beach Vacation",
   "destination" : "Maldives",
-  "dates" : "2024-12-20 to 2024-12-27",
+  "dates" : ["2024-12-20", "2024-12-27"],
   "budget" : 5000,
   "isPast" : false,
   "accommodation" : {
@@ -396,7 +396,7 @@ exports.getTrip = function(userId,tripId) {
   "id" : 101,
   "name" : "Beach Vacation",
   "destination" : "Maldives",
-  "dates" : "2024-12-20 to 2024-12-27",
+  "dates" : ["2024-12-20", "2024-12-27"],
   "budget" : 5000,
   "isPast" : false,
   "accommodation" : {
@@ -442,7 +442,7 @@ exports.getUsersTrips = function(userId) {
   "id" : 101,
   "name" : "Beach Vacation",
   "destination" : "Maldives",
-  "dates" : "2024-12-20 to 2024-12-27",
+  "dates" : ["2024-12-20", "2024-12-27"],
   "budget" : 5000,
   "isPast" : false,
   "accommodation" : {
@@ -468,7 +468,7 @@ exports.getUsersTrips = function(userId) {
   "id" : 101,
   "name" : "Beach Vacation",
   "destination" : "Maldives",
-  "dates" : "2024-12-20 to 2024-12-27",
+  "dates" : ["2024-12-20", "2024-12-27"],
   "budget" : 5000,
   "isPast" : false,
   "accommodation" : {
