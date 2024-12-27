@@ -10,6 +10,7 @@
 var utils = require('../utils/writer.js');
 var GetService = require('../service/GetService');
 var PostService = require('../service/PostService');
+var AddService = require('../service/AddService');
 var PutService = require('../service/PutService');
 var DeleteService = require('../service/DeleteService');
 var AlgorithmicService = require('../service/AlgorithmicService');
@@ -17,7 +18,7 @@ var AlgorithmicService = require('../service/AlgorithmicService');
 
 // Add accommodation to a trip
 module.exports.addAccommodation = function addAccommodation (req, res, next, body, userId, tripId) {
-  PostService.addAccommodation(body, userId, tripId)
+  AddService.addAccommodation(body, userId, tripId)
     .then(function (response) {
       utils.writeJson(res, response);
     })
@@ -28,7 +29,7 @@ module.exports.addAccommodation = function addAccommodation (req, res, next, bod
 
 // Add activity to a day
 module.exports.addActivity = function addActivity (req, res, next, body, userId, tripId, dayId) {
-  PostService.addActivity(body, userId, tripId, dayId)
+  AddService.addActivity(body, userId, tripId, dayId)
     .then(function (response) {
       utils.writeJson(res, response);
     })
@@ -39,7 +40,7 @@ module.exports.addActivity = function addActivity (req, res, next, body, userId,
 
 // Add day to a trip
 module.exports.addDay = function addDay (req, res, next, userId, tripId) {
-  PostService.addDay(userId, tripId)
+  AddService.addDay(userId, tripId)
     .then(function (response) {
       utils.writeJson(res, response);
     })
@@ -50,7 +51,7 @@ module.exports.addDay = function addDay (req, res, next, userId, tripId) {
 
 // Add transportation to a trip
 module.exports.addTransportation = function addTransportation (req, res, next, body, userId, tripId) {
-  PostService.addTransportation(body, userId, tripId)
+  AddService.addTransportation(body, userId, tripId)
     .then(function (response) {
       utils.writeJson(res, response);
     })
