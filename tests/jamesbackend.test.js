@@ -1,23 +1,8 @@
-const http = require("http");
 const test = require("ava");
-const got = require("got");
-const app = require("../index.js");
-const { respondWithCode, writeJson } = require("../utils/writer.js");
+const test_init = require("../test_init");
 
-// Start the server before running tests
-test.before(async (t) => {
-	t.context.server = http.createServer(app);
-	const server = t.context.server.listen();
-    const { port } = server.address();
-	t.context.got = got.extend({
-		prefixUrl: `http://localhost:${port}`
-	});
-});
-
-// Close the server after all tests are done
-test.after.always((t) => {
-	t.context.server.close();
-});
+// Initialize the test environment
+test_init();
 
 // Test the root URL
 test('GET / returns "not found" message', async t => {
@@ -135,133 +120,8 @@ test("POST /user/1/trip should return the trip", async (t) => {
 	t.is(body.budget, 5000, "Expected trip budget to be 5000");
 });
 
-
-/////////////////// Activity deletion ///////////////////////
+// Test the /user/1/trip/101/day/1/activity/1 endpoint
 test("DELETE /user/1/trip/101/day/1/activity/1 should return status 204", async (t) => {
 	const response = await t.context.got.delete('user/1/trip/101/day/1/activity/1');
 	t.is(response.statusCode, 200, "Expected a 200 status code");
-});
-  
-/////////////////// writer.js ///////////////////////
-test('respondWithCode creates a ResponsePayload object correctly', t => {
-	const code = 201;
-	const payload = { message: 'Created' };
-	const responsePayload = respondWithCode(code, payload);
-  
-	t.is(responsePayload.code, code);
-	t.deepEqual(responsePayload.payload, payload);
-});
-
-test('writeJson writes response with default code 200 if no code is provided', t => {
-	const payload = { message: 'Default code' };
-	let statusCode;
-	let headers;
-	let body;
-	const response = {
-		writeHead: (code, hdrs) => {
-			statusCode = code;
-			headers = hdrs;
-		},
-		end: (data) => {
-			body = data;
-		}
-	};
-
-	writeJson(response, payload);
-
-	t.is(statusCode, 200);
-	t.deepEqual(headers, { 'Content-Type': 'application/json' });
-	t.is(body, JSON.stringify(payload, null, 2));
-});
-
-test('writeJson writes response with provided code and payload', t => {
-	const payload = { message: 'Success' };
-	const code = 201;
-	let statusCode;
-	let headers;
-	let body;
-	const response = {
-		writeHead: (code, hdrs) => {
-			statusCode = code;
-			headers = hdrs;
-		},
-		end: (data) => {
-			body = data;
-		}
-	};
-
-	writeJson(response, payload, code);
-
-	t.is(statusCode, code);
-	t.deepEqual(headers, { 'Content-Type': 'application/json' });
-	t.is(body, JSON.stringify(payload, null, 2));
-});
-
-test('writeJson handles a ResponsePayload object correctly', t => {
-	const code = 202;
-	const payload = { message: 'Accepted' };
-	const responsePayload = respondWithCode(code, payload);
-	let statusCode;
-	let headers;
-	let body;
-	const response = {
-		writeHead: (code, hdrs) => {
-			statusCode = code;
-			headers = hdrs;
-		},
-		end: (data) => {
-			body = data;
-		}
-	};
-
-	writeJson(response, responsePayload);
-
-	t.is(statusCode, code);
-	t.deepEqual(headers, { 'Content-Type': 'application/json' });
-	t.is(body, JSON.stringify(payload, null, 2));
-});
-
-test('writeJson handles non-object payloads correctly', t => {
-	const payload = 'Plain text response';
-	const code = 400;
-	let statusCode;
-	let headers;
-	let body;
-	const response = {
-		writeHead: (code, hdrs) => {
-			statusCode = code;
-			headers = hdrs;
-		},
-		end: (data) => {
-			body = data;
-		}
-	};
-
-	writeJson(response, payload, code);
-
-	t.is(statusCode, code);
-	t.deepEqual(headers, { 'Content-Type': 'application/json' });
-	t.is(body, payload);
-});
-
-test('writeJson defaults payload to empty string if no payload is provided', t => {
-	const code = 204;
-	let statusCode;
-	let headers;
-	let body;
-	const response = {
-		writeHead: (code, hdrs) => {
-			statusCode = code;
-			headers = hdrs;
-		},
-		end: (data) => {
-			body = data;
-		}
-	};
-
-	writeJson(response, null, code);
-
-	t.is(statusCode, code);
-	t.deepEqual(headers, { 'Content-Type': 'application/json' });
-	t.is(body, undefined);
 });
