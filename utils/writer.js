@@ -18,6 +18,31 @@ exports.respondWithCode = function(code, payload) {
   return new ResponsePayload(code, payload);
 }
 
+
+function setPayload(code, arg1){
+  var payload;
+  if(code && arg1) {
+    payload = arg1;
+  } else if(arg1) {
+    payload = arg1;
+  }
+  return payload;
+}
+
+
+function responseCode(arg1, arg2){
+  var code;
+  if(arg2 && Number.isInteger(arg2)) {
+    code = arg2;
+  } else {
+    if(arg1 && Number.isInteger(arg1)) {
+      code = arg1;
+    }
+  }
+  return code;
+}
+
+
 /**
  * Sends a JSON response with a specified status code.
  * @param {object} response - The HTTP response object.
@@ -35,21 +60,11 @@ var writeJson = exports.writeJson = function(response, arg1, arg2) {
   }
 
   // Determine the response code from arg2 or arg1 if they are integers
-  if(arg2 && Number.isInteger(arg2)) {
-    code = arg2;
-  } else {
-    if(arg1 && Number.isInteger(arg1)) {
-      code = arg1;
-    }
-  }
+  code = responseCode(arg1, arg2);
 
   // Set the payload
-  if(code && arg1) {
-    payload = arg1;
-  } else if(arg1) {
-    payload = arg1;
-  }
-
+  payload = setPayload(code, arg1);
+  
   // Default to status code 200 if no code is provided
   if(!code) {
     code = 200;
