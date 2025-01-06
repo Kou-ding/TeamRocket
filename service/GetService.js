@@ -26,7 +26,6 @@ exports.getActivity = function(userId,tripId,dayId,activityId) {
     });
   }
   
-  
   /**
    * Get day
    * Returns a specific day
@@ -59,7 +58,6 @@ exports.getActivity = function(userId,tripId,dayId,activityId) {
       }
     });
   }
-  
   
   /**
    * Get a specific trip
@@ -106,7 +104,6 @@ exports.getActivity = function(userId,tripId,dayId,activityId) {
       }
     });
   }
-  
   
   /**
    * Get a user's trips
@@ -178,4 +175,3 @@ exports.getActivity = function(userId,tripId,dayId,activityId) {
       }
     });
   }
-  
