@@ -1,30 +1,11 @@
-const http = require("http");
+// filepath: /home/kou/Documents/TeamRocket/tests/jessiebackend.test.js
 const test = require("ava");
-const got = require("got");
-const app = require("../index.js");
+const test_init = require("../test_init");
 
+// Initialize the test environment
+test_init();
 
-const HTTPError = require("got");
-
-
-// Start the server before running tests
-test.before(async (t) => {
-	t.context.server = http.createServer(app);
-	const server = t.context.server.listen();
-    const { port } = server.address();
-
-	t.context.got = got.extend({
-		prefixUrl: `http://localhost:${port}`,
-        responseType: "json",
-	});
-});
-
-// Close the server after all tests are done
-test.after.always((t) => {
-	t.context.server.close();
-});
-
-// Test for succesful POST /day
+// Test for successful POST /day
 test("Happy Path: Successfully add a day to the trip", async (t) => {
     const userId = 1;
     const tripId = 101;
@@ -38,22 +19,21 @@ test("Happy Path: Successfully add a day to the trip", async (t) => {
     // The API is not connected to an actual dataBase so the id and dayNumber are artificial 
     // and thus cannot be tested properly
 
+    // Ensure the response body is parsed as JSON
+    const body = JSON.parse(response.body);
+
     // Validate that the returned trip has the correct id 
     // The artificial value is 101 so that is what will be tested.
-    t.is(response.body.id, 101, "Returned day ID should be 101");
-
-    // Validate the returned trip object
-    const trip = response.body;
+    t.is(body.id, 101, "Returned day ID should be 101");
 
     // Ensure the trip object has the expected structure
-    t.truthy(trip.daysList, "Response should include a daysList");
-    t.true(Array.isArray(trip.daysList), "daysList should be an array");
+    t.truthy(body.daysList, "Response should include a daysList");
+    t.true(Array.isArray(body.daysList), "daysList should be an array");
 
     // Validate that a new Day has been added to the trip
     // Since there is no data Base to check whether a new Day has been added 
     // we will check that the daysList is not empty
-    t.true(trip.daysList.length > 0, "daysList should not be empty");
-
+    t.true(body.daysList.length > 0, "daysList should not be empty");
 });
 
 
