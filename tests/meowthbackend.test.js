@@ -1,40 +1,4 @@
-const http = require("http");
-const test = require("ava");
-const got = require("got");
-const app = require("../index.js");
 
-// Define routes as constants for maintainability
-const ROUTES = {
-  getTrip: (userId, tripId) => `user/${userId}/trip/${tripId}`,
-  addAccommodation: (userId, tripId) => `user/${userId}/trip/${tripId}/accommodation`,
-  addTransportation: (userId, tripId) => `user/${userId}/trip/${tripId}/transportation`,
-};
-
-// Utility to create and configure `got` instance
-const createGotInstance = (server) => {
-  const { port } = server.address();
-  return got.extend({
-    prefixUrl: `http://localhost:${port}`,
-    responseType: "json",
-  });
-};
-
-// Shared function to assert API responses
-const assertResponse = (t, response, expectedStatusCode, message = "") => {
-  t.is(response.statusCode, expectedStatusCode, message || `Expected status ${expectedStatusCode}`);
-};
-
-// Start the server before running tests
-test.before(async (t) => {
-  t.context.server = http.createServer(app);
-  t.context.server.listen();
-  t.context.got = createGotInstance(t.context.server);
-});
-
-// Close the server after all tests are done
-test.after.always((t) => {
-  t.context.server.close();
-});
 
 // Test: GET /user/:id/trip/:id
 test("GET /user/:id/trip/:id should return trip details", async (t) => {
