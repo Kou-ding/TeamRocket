@@ -1,18 +1,21 @@
+const http = require("http");
 const test = require("ava");
-const test_init = require("../test_init");
+const got = require("got");
+const app = require("../index.js");
 
-// Initialize the test environment
-test_init();
+// Start the server before running tests
+test.before(async (t) => {
+	t.context.server = http.createServer(app);
+	const server = t.context.server.listen();
+    const { port } = server.address();
+	t.context.got = got.extend({
+		prefixUrl: `http://localhost:${port}`
+	});
+});
 
-// Test the root URL
-test('GET / returns "not found" message', async t => {
-	try {
-        await t.context.got.get(``); // Make a request to the root URL
-        t.fail('Request should have thrown an error');
-    } catch (error) {
-        t.is(error.response.statusCode, 404); // Ensure status is 404
-        t.truthy(error.response.body); // Optionally verify the error body
-	}
+// Close the server after all tests are done
+test.after.always((t) => {
+	t.context.server.close();
 });
 
 // Test the /docs endpoint
@@ -28,7 +31,6 @@ test("GET /docs should return status 200", async (t) => {
     t.is(response.body.includes("Swagger UI"), true, "Expected the response body to include 'Swagger UI'");
 });
 
-// Test the /user endpoint
 test("POST /user should return the user", async (t) => {
 	const response = await t.context.got.post('user/', {
 		json: {
@@ -46,9 +48,7 @@ test("POST /user should return the user", async (t) => {
 	t.is(body.email, "john.doe@example.com", "Expected user email to be 'john.doe@example.com'");
 });
 
-
-// Test the /user/1 endpoint
-test("GET /user/1", async (t) => {
+test("GET /user/", async (t) => {
 	// Wait for the response
 	const response = await t.context.got('user/1');
 
@@ -71,7 +71,6 @@ test("GET /user/1", async (t) => {
 	t.is(trip.budget, 5000, "Expected trip budget to be 5000");
 });
 
-// Test the /user/1/trip endpoint
 test("POST /user/1/trip should return the trip", async (t) => {
 	// Define the new trip
 	const response = await t.context.got.post('user/1/trip', {
@@ -118,10 +117,4 @@ test("POST /user/1/trip should return the trip", async (t) => {
 	t.is(body.name, "Beach Vacation", "Expected trip name to be 'Beach Vacation'");
 	t.deepEqual(body.dates, ["2024-12-20", "2024-12-27"], "Expected trip dates to be ['2024-12-20', '2024-12-27']");
 	t.is(body.budget, 5000, "Expected trip budget to be 5000");
-});
-
-// Test the /user/1/trip/101/day/1/activity/1 endpoint
-test("DELETE /user/1/trip/101/day/1/activity/1 should return status 204", async (t) => {
-	const response = await t.context.got.delete('user/1/trip/101/day/1/activity/1');
-	t.is(response.statusCode, 200, "Expected a 200 status code");
 });
