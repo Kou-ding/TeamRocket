@@ -1,8 +1,24 @@
+const http = require("http");
 const test = require("ava");
-const test_init = require("../test_init");
+const got = require("got");
+const app = require("../index.js");
+const { emitWarning } = require("process");
 
-// Initialize the test environment
-test_init();
+// Start the server before running tests
+test.before(async (t) => {
+    t.context.server = http.createServer(app);
+    const server = t.context.server.listen();
+    const { port } = server.address();
+    t.context.got = got.extend({
+        prefixUrl: `http://localhost:${port}`,
+        responseType: 'json' // Automatically parse JSON responses
+    });
+});
+
+// Close the server after all tests are done
+test.after.always((t) => {
+    t.context.server.close();
+});
 
 test("GET /user/:id/trip/:id/day/:id/activity/:id should return an activity", async (t) => {
     const id = 101; // Single ID for user, trip, day, and activity

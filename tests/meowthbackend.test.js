@@ -1,152 +1,134 @@
-/**
- * Test Suite for Trip Management API
- * This suite tests the functionality of the Trip Management API, including retrieving trip details,
- * and adding accommodations and transportation for a trip. It uses the `ava` testing framework.
- */
+'use strict';
 
-const http = require("http");
-const test = require("ava");
-const got = require("got");
-const app = require("../index.js"); // Import the application instance
+var utils = require('../utils/writer.js');
+var Default = require('../service/DefaultService');
 
-/**
- * Centralized Route Definitions
- * ROUTES object contains all the API endpoint paths used in the test suite.
- * This centralization avoids hardcoding paths multiple times, improving maintainability.
- */
-const ROUTES = {
-  getTrip: (userId, tripId) => `user/${userId}/trip/${tripId}`, // GET trip details
-  addAccommodation: (userId, tripId) => `user/${userId}/trip/${tripId}/accommodation`, // POST accommodation
-  addTransportation: (userId, tripId) => `user/${userId}/trip/${tripId}/transportation`, // POST transportation
+module.exports.addAccommodation = function addAccommodation (req, res, next, body, userId, tripId) {
+  Default.addAccommodation(body, userId, tripId)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };
 
-/**
- * Utility to Create and Configure Got Instance
- * @param {Server} server - The server instance used for testing.
- * @returns {Got} - A `got` instance configured with the server's address and response type.
- * This function dynamically sets the `prefixUrl` based on the server's port,
- * ensuring that tests work on any available port.
- */
-const createGotInstance = (server) => {
-  const { port } = server.address(); // Retrieve the dynamically allocated port
-  return got.extend({
-    prefixUrl: `http://localhost:${port}`, // Prefix for all API requests
-    responseType: "json", // Automatically parse JSON responses
-  });
+module.exports.addActivity = function addActivity (req, res, next, body, userId, tripId, dayId) {
+  Default.addActivity(body, userId, tripId, dayId)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };
 
-/**
- * Utility to Assert API Responses
- * @param {Object} t - Ava's test assertion context.
- * @param {Object} response - The HTTP response object returned by `got`.
- * @param {number} expectedStatusCode - The expected HTTP status code.
- * @param {string} [message=""] - Optional custom message for the assertion.
- * Centralizes response status code assertions to improve code readability and reduce redundancy.
- */
-const assertResponse = (t, response, expectedStatusCode, message = "") => {
-  t.is(response.statusCode, expectedStatusCode, message || `Expected status ${expectedStatusCode}`);
+module.exports.addDay = function addDay (req, res, next, userId, tripId) {
+  Default.addDay(userId, tripId)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };
 
-// Start the server before running tests
-test.before(async (t) => {
-  /**
-   * `before` Hook
-   * - Starts the server for the test suite.
-   * - Configures the `got` instance for making HTTP requests.
-   */
-  t.context.server = http.createServer(app); // Create the HTTP server
-  t.context.server.listen(); // Start the server
-  t.context.got = createGotInstance(t.context.server); // Configure the `got` instance
-});
+module.exports.addTransportation = function addTransportation (req, res, next, body, userId, tripId) {
+  Default.addTransportation(body, userId, tripId)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
 
-// Close the server after all tests are done
-test.after.always((t) => {
-  /**
-   * `after` Hook
-   * - Ensures the server is closed after the tests complete.
-   * - This prevents resource leaks and ensures a clean environment for subsequent tests.
-   */
-  t.context.server.close();
-});
+module.exports.createTrip = function createTrip (req, res, next, body, userId) {
+  Default.createTrip(body, userId)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
 
-/**
- * Test: GET /user/:id/trip/:id
- * Validates that the API correctly retrieves the details of a trip.
- */
-test("GET /user/:id/trip/:id should return trip details", async (t) => {
-  const userId = 101; // Example user ID
-  const tripId = 101; // Example trip ID
+module.exports.createUser = function createUser (req, res, next, body) {
+  Default.createUser(body)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
 
-  // Make a GET request to retrieve trip details
-  const response = await t.context.got(ROUTES.getTrip(userId, tripId));
+module.exports.deleteActivity = function deleteActivity (req, res, next, userId, tripId, dayId, activityId) {
+  Default.deleteActivity(userId, tripId, dayId, activityId)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
 
-  // Assert that the response status code is 200 (OK)
-  assertResponse(t, response, 200, "Trip details API should return 200 status");
+module.exports.generateRandomActivities = function generateRandomActivities (req, res, next, userId, tripId, dayId) {
+  Default.generateRandomActivities(userId, tripId, dayId)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
 
-  const body = response.body; // Extract the response body
-  t.is(body.id, tripId, "Expected trip ID to match");
-  t.is(body.name, "Beach Vacation", "Expected trip name to match");
-  t.deepEqual(
-    body.transportation,
-    {
-      name: "Flight",
-      date: "2024-12-20",
-      time: 930,
-    },
-    "Expected transportation details to match"
-  );
-});
+module.exports.getActivity = function getActivity (req, res, next, userId, tripId, dayId, activityId) {
+  Default.getActivity(userId, tripId, dayId, activityId)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
 
-/**
- * Test: POST /user/:id/trip/:id/accommodation
- * Validates that the API correctly adds an accommodation to a trip.
- */
-test("POST /user/:id/trip/:id/accommodation should add accommodation", async (t) => {
-  const userId = 101; // Example user ID
-  const tripId = 101; // Example trip ID
-  const newAccommodation = {
-    name: "Paradise Inn",
-    address: "123 Beach Road, Maldives",
-    price: 1500,
-  };
+module.exports.getDay = function getDay (req, res, next, userId, tripId, dayId) {
+  Default.getDay(userId, tripId, dayId)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
 
-  // Make a POST request to add accommodation
-  const response = await t.context.got.post(ROUTES.addAccommodation(userId, tripId), {
-    json: newAccommodation, // Request body
-  });
+module.exports.getTrip = function getTrip (req, res, next, userId, tripId) {
+  Default.getTrip(userId, tripId)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
 
-  // Assert that the response status code is 200 (OK)
-  assertResponse(t, response, 200, "Add accommodation API should return 200 status");
+module.exports.getUsersTrips = function getUsersTrips (req, res, next, userId) {
+  Default.getUsersTrips(userId)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
 
-  const body = response.body; // Extract the response body
-  t.is(body.accommodation.name, newAccommodation.name, "Expected accommodation name to match");
-  t.is(body.accommodation.address, newAccommodation.address, "Expected accommodation address to match");
-  t.is(body.accommodation.price, newAccommodation.price, "Expected accommodation price to match");
-});
-
-/**
- * Test: POST /user/:id/trip/:id/transportation
- * Validates that the API correctly adds transportation to a trip.
- */
-test("POST /user/:id/trip/:id/transportation should add transportation", async (t) => {
-  const userId = 101; // Example user ID
-  const tripId = 101; // Example trip ID
-  const newTransportation = {
-    name: "Flight",
-    date: "2024-12-20",
-    time: 930,
-  };
-
-  // Make a POST request to add transportation
-  const response = await t.context.got.post(ROUTES.addTransportation(userId, tripId), {
-    json: newTransportation, // Request body
-  });
-
-  // Assert that the response status code is 200 (OK)
-  assertResponse(t, response, 200, "Add transportation API should return 200 status");
-
-  const body = response.body; // Extract the response body
-  t.is(body.transportation.name, newTransportation.name, "Expected transportation name to match");
-  t.is(body.transportation.date, newTransportation.date, "Expected transportation date to match");
-  t.is(body.transportation.time, newTransportation.time, "Expected transportation time to match");
-});
+module.exports.updateActivity = function updateActivity (req, res, next, body, userId, tripId, dayId, activityId) {
+  Default.updateActivity(body, userId, tripId, dayId, activityId)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
