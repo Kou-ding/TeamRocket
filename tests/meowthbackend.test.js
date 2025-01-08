@@ -1,134 +1,86 @@
-'use strict';
+const test = require("ava");
+const test_init = require("../test_init");
 
-var utils = require('../utils/writer.js');
-var Default = require('../service/DefaultService');
+// Initialize the test environment
+test_init();
 
-module.exports.addAccommodation = function addAccommodation (req, res, next, body, userId, tripId) {
-  Default.addAccommodation(body, userId, tripId)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
+test("GET /user/:id/trip/:id should return the trip details", async (t) => {
+    const id = 101;
+  
+    const response = await t.context.got(`user/${id}/trip/${id}`);
+  
+    t.is(response.statusCode, 200, "Expected a 200 status code");
+  
+    const body = typeof response.body === "string" ? JSON.parse(response.body) : response.body;
+  
+    // Assert trip details
+    t.is(body.id, 101, "Expected trip ID to be 101");
+    t.is(body.name, "Beach Vacation", "Expected trip name to be 'Beach Vacation'");
+  
+    // Assert transportation
+    t.deepEqual(body.transportation, {
+      name: "Flight",
+      date: "2024-12-20", 
+      time: 930,
     });
-};
-
-module.exports.addActivity = function addActivity (req, res, next, body, userId, tripId, dayId) {
-  Default.addActivity(body, userId, tripId, dayId)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
+  });
+  
+test("POST /user/:id/trip/:id/accommodation should add accommodation", async (t) => {
+    const id = 101;
+    const newAccommodation = {
+      name: "Paradise Inn",
+      address: "123 Beach Road, Maldives",
+      price: 1500,
+    };
+  
+    const response = await t.context.got.post(`user/${id}/trip/${id}/accommodation`, {
+      json: newAccommodation,
+      responseType: "json", // Automatically parse JSON response
     });
-};
+  
+    // Debugging: Log the response if the test fails
+    if (response.statusCode !== 200) {
+      console.log("Response Status:", response.statusCode);
+      console.log("Response Body:", response.body);
+    }
+  
+    t.is(response.statusCode, 200, "Expected a 200 status code");
+  
+    const body = response.body;
+  
+    // Assert accommodation details
+    t.is(body.accommodation.name, "Paradise Inn", "Expected accommodation name to match");
+    t.is(body.accommodation.address, "123 Beach Road, Maldives", "Expected accommodation address to match");
+    t.is(body.accommodation.price, 1500, "Expected accommodation price to match");
+  });
 
-module.exports.addDay = function addDay (req, res, next, userId, tripId) {
-  Default.addDay(userId, tripId)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
+test("POST /user/:id/trip/:id/transportation should add transportation", async (t) => {
+    const id = 101; // Example ID for user and trip
+    const newTransportation = {
+      name: "Flight",
+      date: "2024-12-20",
+      time: 930,
+    };
+  
+    const response = await t.context.got.post(`user/${id}/trip/${id}/transportation`, {
+      json: newTransportation,
+      responseType: "json", // Automatically parse JSON response
     });
-};
-
-module.exports.addTransportation = function addTransportation (req, res, next, body, userId, tripId) {
-  Default.addTransportation(body, userId, tripId)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};
-
-module.exports.createTrip = function createTrip (req, res, next, body, userId) {
-  Default.createTrip(body, userId)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};
-
-module.exports.createUser = function createUser (req, res, next, body) {
-  Default.createUser(body)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};
-
-module.exports.deleteActivity = function deleteActivity (req, res, next, userId, tripId, dayId, activityId) {
-  Default.deleteActivity(userId, tripId, dayId, activityId)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};
-
-module.exports.generateRandomActivities = function generateRandomActivities (req, res, next, userId, tripId, dayId) {
-  Default.generateRandomActivities(userId, tripId, dayId)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};
-
-module.exports.getActivity = function getActivity (req, res, next, userId, tripId, dayId, activityId) {
-  Default.getActivity(userId, tripId, dayId, activityId)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};
-
-module.exports.getDay = function getDay (req, res, next, userId, tripId, dayId) {
-  Default.getDay(userId, tripId, dayId)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};
-
-module.exports.getTrip = function getTrip (req, res, next, userId, tripId) {
-  Default.getTrip(userId, tripId)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};
-
-module.exports.getUsersTrips = function getUsersTrips (req, res, next, userId) {
-  Default.getUsersTrips(userId)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};
-
-module.exports.updateActivity = function updateActivity (req, res, next, body, userId, tripId, dayId, activityId) {
-  Default.updateActivity(body, userId, tripId, dayId, activityId)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};
+  
+    // Debugging: Log the response if the test fails
+    if (response.statusCode !== 200) {
+      console.log("Response Status:", response.statusCode);
+      console.log("Response Body:", response.body);
+    }
+  
+    // Assert the response status
+    t.is(response.statusCode, 200, "Expected a 200 status code");
+  
+    const body = response.body;
+  
+    // Assert the transportation details
+    t.is(body.transportation.name, "Flight", "Expected transportation name to match");
+    t.is(body.transportation.date, "2024-12-20", "Expected transportation date to match");
+    t.is(body.transportation.time, 930, "Expected transportation time to match");
+  });
+  
