@@ -34,5 +34,3 @@ exports.updateActivity = function(body,userId,tripId,dayId,activityId) {
       }
     });
   }
-  
-  
